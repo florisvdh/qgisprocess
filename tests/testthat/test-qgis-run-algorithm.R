@@ -1,3 +1,4 @@
+capture.output({
 
 test_that("qgis_run_algorithm() works", {
   skip_if_not(has_qgis())
@@ -104,4 +105,6 @@ test_that("qgis_run_algorithm succeeds when it needs a QGIS project", {
   expect_true(file.exists(tmp_pdf))
   expect_identical(tmp_pdf, as.character(result$OUTPUT))
   unlink(tmp_pdf)
+})
+
 })
