@@ -94,6 +94,7 @@ capture.output({
 
   test_that(glue("qgis_run_algorithm succeeds when it needs a QGIS project {input}"), {
     skip_if_not(has_qgis())
+    skip_on_os("mac")
 
     tmp_pdf <- qgis_tmp_file(".pdf")
 
