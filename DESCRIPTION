@@ -42,7 +42,6 @@ Suggests:
     testthat,
     sf,
     raster,
-    covr,
     stars,
     terra,
     fs
