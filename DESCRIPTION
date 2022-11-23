@@ -42,7 +42,6 @@ Suggests:
     testthat,
     sf,
     raster,
-    rgdal,
     covr,
     stars,
     terra,
