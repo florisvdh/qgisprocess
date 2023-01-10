@@ -112,7 +112,7 @@ jobs:
           cat("::endgroup::\n")
           cat("::group::Print results\n")
           cat("R version:", sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), "\n")
-          print(as.data.frame(depends))
+          print(as.data.frame(depends), row.names = FALSE)
           cat("::endgroup::\n")
         shell: Rscript {0}
 
