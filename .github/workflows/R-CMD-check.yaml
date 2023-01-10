@@ -126,8 +126,13 @@ jobs:
 
       - name: Install missing package dependencies
         run: |
+          cat("::group::Install\n")
           pak::pkg_install(c("deps::.", "any::sessioninfo", "any::rcmdcheck"), upgrade = FALSE, dependencies = c("Config/Needs/check", "all"))
           # This is based on the minimum needed version, not the hash of what is available at RSPM
+          cat("::endgroup::\n")
+          cat("::group::Session info\n")
+          sessioninfo::session_info(pkgs = "installed", include_base = TRUE)
+          cat("::endgroup::\n")
         shell: Rscript {0}
 
       # raster, sf, terra, lwgeom and rgdal from RSPM use older sysdeps than ubuntugis
