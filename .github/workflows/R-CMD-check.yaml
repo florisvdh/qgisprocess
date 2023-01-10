@@ -96,6 +96,7 @@ jobs:
           args: install qgis
 
       - name: Query R dependencies and report available versions
+        id: query
         run: |
           # Query R dependencies and report available versions
           cat("::group::Install pak\n")
@@ -107,7 +108,7 @@ jobs:
           saveRDS(depends, ".github/depends.Rds")
           cat("::endgroup::\n")
           cat("::group::Store R-version\n")
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+          cat("r-version=", sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), "\n", file = Sys.getenv("GITHUB_OUTPUT"), sep = "", append = TRUE)
           cat("::endgroup::\n")
           cat("::group::Print results\n")
           cat("R version:", sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), "\n")
@@ -121,7 +122,7 @@ jobs:
           path: |
             ${{ env.R_LIBS_USER }}/*
             !${{ env.R_LIBS_USER }}/pak
-          key: ${{ matrix.config.os }}-${{ matrix.config.r-pkg-cache }}-${{ hashFiles('.github/R-version') }}-${{ hashFiles('.github/depends.Rds') }}
+          key: ${{ matrix.config.os }}-${{ steps.query.outputs.r-version }}-${{ matrix.config.r-pkg-cache }}-${{ hashFiles('.github/depends.Rds') }}
 
       - name: Install missing package dependencies
         run: |
