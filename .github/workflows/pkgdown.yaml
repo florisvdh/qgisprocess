@@ -45,4 +45,4 @@ jobs:
       - name: Build site without deploying
         if: github.event_name == 'pull_request'
         run: |
-          Rscript -e 'pkgdown::build_site(preview = FALSE, install = FALSE)'
+          Rscript -e 'pkgdown::build_site(preview = FALSE)'
