@@ -15,7 +15,6 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       SAGANGV: 0.0.7
-      QGIS_PLUGINPATH: $(pwd)
     steps:
       - uses: actions/checkout@v3
 
@@ -24,6 +23,9 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
+
+      - name: Set QGIS_PLUGINPATH environment variable
+        run: echo "QGIS_PLUGINPATH=$(pwd)" >> $GITHUB_ENV
 
       - name: Install QGIS (Ubuntu)
         run: |
