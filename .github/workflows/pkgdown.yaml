@@ -33,10 +33,9 @@ jobs:
           export QGIS_PLUGINPATH=$(pwd)
           echo $QGIS_PLUGINPATH
           pwd
-          wget https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
+          wget -O output.zip https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
           pwd
-          ls processing_saga_nextgen*
-          unzip -q processing_saga_nextgen*.zip
+          unzip -q output.zip
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
