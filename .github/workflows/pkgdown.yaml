@@ -31,7 +31,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y qgis qgis-plugin-grass saga
           export QGIS_PLUGINPATH=$(pwd)
-          wget -q https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
+          echo $QGIS_PLUGINPATH
+          pwd
+          wget https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
+          pwd
+          ls processing_saga_nextgen*
           unzip -q processing_saga_nextgen*.zip
 
       - uses: r-lib/actions/setup-r-dependencies@v2
