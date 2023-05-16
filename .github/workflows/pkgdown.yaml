@@ -35,7 +35,7 @@ jobs:
           pwd
           wget -O output.zip https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
           pwd
-          unzip -q output.zip
+          unzip output.zip
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
