@@ -15,6 +15,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       SAGANGV: 0.0.7
+      QGIS_PLUGINPATH: $(pwd)
     steps:
       - uses: actions/checkout@v3
 
@@ -30,7 +31,6 @@ jobs:
           sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/qgis-archive-keyring.gpg] https://qgis.org/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/qgis.list'
           sudo apt-get update
           sudo apt-get install -y qgis qgis-plugin-grass saga
-          export QGIS_PLUGINPATH=$(pwd)
           echo $QGIS_PLUGINPATH
           pwd
           wget -O output.zip https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
