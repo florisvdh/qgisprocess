@@ -25,7 +25,9 @@ jobs:
           use-public-rspm: true
 
       - name: Set QGIS_PLUGINPATH environment variable
-        run: echo "QGIS_PLUGINPATH=$(pwd)" >> $GITHUB_ENV
+        run: |
+          mkdir extra_plugins
+          echo "QGIS_PLUGINPATH='$(pwd)/extra_plugins'" >> $GITHUB_ENV
 
       - name: Install QGIS (Ubuntu)
         run: |
@@ -37,7 +39,7 @@ jobs:
           pwd
           wget -O output.zip https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
           pwd
-          unzip output.zip
+          unzip output.zip -d extra_plugins
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
