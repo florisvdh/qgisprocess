@@ -27,7 +27,7 @@ jobs:
       - name: Set QGIS_PLUGINPATH environment variable
         run: |
           mkdir extra_plugins
-          echo "QGIS_PLUGINPATH='$(pwd)/extra_plugins'" >> $GITHUB_ENV
+          echo "QGIS_PLUGINPATH=$(pwd)/extra_plugins" >> $GITHUB_ENV
 
       - name: Install QGIS (Ubuntu)
         run: |
