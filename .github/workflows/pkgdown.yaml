@@ -26,8 +26,8 @@ jobs:
 
       - name: Dynamically set QGIS_PLUGINPATH environment var (available to next steps)
         run: |
-          mkdir extra_plugins
-          echo "QGIS_PLUGINPATH=$(pwd)/extra_plugins" >> $GITHUB_ENV
+          mkdir ../extra_plugins
+          echo "QGIS_PLUGINPATH=$(pwd)/../extra_plugins" >> $GITHUB_ENV
 
       - name: Install QGIS (Ubuntu)
         run: |
@@ -39,7 +39,7 @@ jobs:
           pwd
           wget -O output.zip https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
           pwd
-          unzip output.zip -d extra_plugins
+          unzip output.zip -d ../extra_plugins
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
