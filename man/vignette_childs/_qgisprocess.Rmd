@@ -1,6 +1,6 @@
 For a very short introduction to **qgisprocess**, visit the [homepage](https://r-spatial.github.io/qgisprocess).
 
-Here you will learn about package configuration, about basic usage guided by two examples, and how to pipe results into a next geoprocessing step.
+Here you will learn about package configuration, about basic usage illustrated by two examples, and how to pipe results into a next geoprocessing step.
 
 # Setting up the system
 
@@ -8,7 +8,7 @@ Here you will learn about package configuration, about basic usage guided by two
 Therefore, you need to have installed QGIS on your system as well as third-party providers such as GRASS and SAGA to access and run all geoalgorithms provided through `qgis_process` from within R.
 
 The package is meant to support _current_ QGIS releases, i.e. both the latest and the long-term release.
-Although older QGIS releases are not officially supported, it may work since QGIS 3.16.
+Although older QGIS releases are not officially supported, **qgisprocess** might work with QGIS versions >=3.16.
 Download instructions for all platforms are available at <https://download.qgis.org/>.
 
 To facilitate using **qgisprocess**, we have created a docker image that already comes with the needed software packages.
@@ -70,7 +70,7 @@ qgis_plugins()
 
 Since we will use GRASS and SAGA later on, let's enable them (of course, this implies that you have already installed GRASS and SAGA version > 7 on your system):
 
-```{r enable-plugins}
+```{r enable-plugins, message=FALSE}
 qgis_enable_plugins(c("grassprovider", "processing_saga_nextgen"))
 ```
 
@@ -127,12 +127,13 @@ result <- qgis_run_algorithm("native:buffer", INPUT = random_points, DISTANCE = 
 
 As a convenience to the user, `qgis_run_algorithm()` reports all unspecified and automatically chosen arguments.
 If you want to have even more information on what is going on in the background, set `.quiet` to `FALSE`.
-The `result` object is of class `qgis_result` and contains the path to the output file created by `qgis_process` (when not explicitly setting an output object, **qgisprocess** creates it automatically for you).
-The output filepath be extracted with `qgis_extract_output()`.
-The `result` object also contains debugging information about used algorithm, input arguments and messages from the processing step; see `?qgis_result_status` to extract this easily.
+The `result` object is of class `qgis_result` and contains the path to the output file created by `qgis_process` (when not explicitly setting an output filepath, **qgisprocess** creates it automatically for you).
+The output filepath can be extracted with `qgis_extract_output()`.
+`qgis_result` objects are of type `list` which, aside from the geoprocessing result, also contain debugging information about the used algorithm, input arguments and messages from the processing step.
+See `?qgis_result_status` for various convenience functions to extract all of this information easily from `qgis_result` objects.
 
 For QGIS 3.24 and later, `qgis_run_algorithm()` passes the input arguments to QGIS as a JSON string.
-The JSON input string is also included in the `result` object.
+The JSON input string is also included in `qgis_result` objects.
 Moreover, the user can specify input arguments directly as JSON in `qgis_run_algorithm()`.
 That is useful since input parameters can be copied from the QGIS GUI as JSON.
 This will be demonstrated in a separate tutorial.
@@ -287,7 +288,7 @@ Using the default raster output format `.tif` might lead to trouble depending on
 
 ```{r qgis-pipe}
 dem <- system.file("raster/dem.tif", package = "spDataLarge")
-# in case you need to enable the SAGA next generation algorithms, run the following lines:
+# in case you need to enable the SAGA next generation algorithms, run the following line:
 # qgis_enable_plugins("processing_saga_nextgen")
 
 options(qgisprocess.tmp_raster_ext = ".sdat")

@@ -24,7 +24,7 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Set QGIS_PLUGINPATH environment variable
+      - name: Dynamically set QGIS_PLUGINPATH environment var (available to next steps)
         run: |
           mkdir extra_plugins
           echo "QGIS_PLUGINPATH=$(pwd)/extra_plugins" >> $GITHUB_ENV
