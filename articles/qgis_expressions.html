@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">qgisprocess</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,9 @@
     <a class="dropdown-item" href="../articles/cheatsheet_es.html">Cheat Sheet (español)</a>
     <a class="dropdown-item" href="../articles/qgis_expressions.html">How to use QGIS expressions in qgisprocess?</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -78,7 +81,7 @@
                         <h4 data-toc-skip class="author">Floris
 Vanderhaeghe &amp; Jannes Muenchow</h4>
             
-            <h4 data-toc-skip class="date">Last updated: 2023-04-24</h4>
+            <h4 data-toc-skip class="date">Last updated: 2023-08-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-spatial/qgisprocess/blob/HEAD/vignettes/qgis_expressions.Rmd" class="external-link"><code>vignettes/qgis_expressions.Rmd</code></a></small>
       <div class="d-none name"><code>qgis_expressions.Rmd</code></div>
@@ -87,7 +90,7 @@ Vanderhaeghe &amp; Jannes Muenchow</h4>
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-spatial/qgisprocess" class="external-link">qgisprocess</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/qgisprocess/">qgisprocess</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -108,9 +111,9 @@ output of <code><a href="../reference/qgis_show_help.html">qgis_get_argument_spe
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> FORMULA Formula     expressi… <span style="color: #949494;">&lt;NULL&gt;</span>        <span style="color: #949494;">&lt;NULL&gt;</span>           <span style="color: #949494;">&lt;chr [1]&gt;</span></span></span></code></pre></div>
 <p>Secondly, one can use expressions for <em>data-defined</em>
 overriding. This means that an algorithm argument that is usually a
-fixed (numeric or boolean) value can <em>also</em> take on the value of
-another field or the result of an expression. In the QGIS processing
-dialog, such arguments have a ‘<a href="https://docs.qgis.org/latest/en/docs/user_manual/introduction/general_tools.html#data-defined" class="external-link">data-defined
+fixed value (number, distance, boolean, string or color) can
+<em>also</em> take on the value of another field or the result of an
+expression. In the QGIS processing dialog, such arguments have a ‘<a href="https://docs.qgis.org/latest/en/docs/user_manual/introduction/general_tools.html#data-defined" class="external-link">data-defined
 override</a>’ button. An example is provided by the
 <code>DISTANCE</code> argument of <code>native:buffer</code>, for which
 we query the acceptable values below.</p>
@@ -283,6 +286,7 @@ fields (attributes), but you can also omit them.</p>
 <span><span class="co">#&gt; Using `JOIN_STYLE = "Round"`</span></span>
 <span><span class="co">#&gt; Argument `MITER_LIMIT` is unspecified (using QGIS default value).</span></span>
 <span><span class="co">#&gt; Argument `DISSOLVE` is unspecified (using QGIS default value).</span></span>
+<span><span class="co">#&gt; Argument `SEPARATE_DISJOINT` is unspecified (using QGIS default value).</span></span>
 <span><span class="co">#&gt; Using `OUTPUT = qgis_tmp_vector()`</span></span></code></pre></div>
 <p>So from the 64 points we have created 64 polygons:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -292,14 +296,16 @@ fields (attributes), but you can also omit them.</p>
 <span><span class="co">#&gt;           64</span></span></code></pre></div>
 <p>Plot the result:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">lake_border_path</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">buffer</span><span class="op">[</span>, <span class="st">"DEPTH_M"</span><span class="op">]</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="qgis_expressions_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldpar</span><span class="op">)</span></span></code></pre></div>
 <p>If you just want to refer to the value of another attribute, then you
 can also use the <code>field:</code> prefix instead, <em>without</em>
 double quotes around the attribute name and <em>without</em> spaces:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qgis_run_algorithm.html">qgis_run_algorithm</a></span><span class="op">(</span></span>
 <span>  <span class="st">"native:buffer"</span>,</span>
 <span>  INPUT <span class="op">=</span> <span class="va">longlake_depth_path</span>,</span>
@@ -315,7 +321,7 @@ double quotes around the attribute name and <em>without</em> spaces:</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Dewey Dunnington, Floris Vanderhaeghe, Jan Caha, Jannes Muenchow.</p>
+<p>Developed by Dewey Dunnington, Floris Vanderhaeghe, Jan Caha, Jannes Muenchow, Research Institute for Nature and Forest (INBO).</p>
 </div>
 
 <div class="pkgdown-footer-right">

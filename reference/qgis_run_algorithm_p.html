@@ -14,7 +14,7 @@ This makes it more convenient in a pipeline (hence '_p' in the name)."><!-- math
     
     <a class="navbar-brand me-2" href="../index.html">qgisprocess</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,9 @@ This makes it more convenient in a pipeline (hence '_p' in the name)."><!-- math
     <a class="dropdown-item" href="../articles/cheatsheet_es.html">Cheat Sheet (español)</a>
     <a class="dropdown-item" href="../articles/qgis_expressions.html">How to use QGIS expressions in qgisprocess?</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -113,6 +116,12 @@ This can be useful in debugging.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>A <code>qgis_result</code> object.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Uses <code><a href="qgis_function.html">qgis_function()</a></code> under the hood.</p>
     </div>
@@ -124,26 +133,24 @@ This can be useful in debugging.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="has_qgis.html">has_qgis</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"longlake/longlake_depth.gpkg"</span>,</span></span>
-<span class="r-in"><span>    package <span class="op">=</span> <span class="st">"qgisprocess"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>    <span class="fu">qgis_run_algorithm_p</span><span class="op">(</span></span></span>
-<span class="r-in"><span>      <span class="st">"native:buffer"</span>,</span></span>
-<span class="r-in"><span>      DISTANCE <span class="op">=</span> <span class="fl">10</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"longlake/longlake_depth.gpkg"</span>,</span></span>
+<span class="r-in"><span>  package <span class="op">=</span> <span class="st">"qgisprocess"</span></span></span>
+<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">qgis_run_algorithm_p</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"native:buffer"</span>,</span></span>
+<span class="r-in"><span>    DISTANCE <span class="op">=</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Argument `SEGMENTS` is unspecified (using QGIS default value).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using `END_CAP_STYLE = "Round"`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using `JOIN_STYLE = "Round"`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Argument `MITER_LIMIT` is unspecified (using QGIS default value).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Argument `DISSOLVE` is unspecified (using QGIS default value).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Argument `SEPARATE_DISJOINT` is unspecified (using QGIS default value).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using `OUTPUT = qgis_tmp_vector()`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Result of `qgis_run_algorithm("native:buffer", ...)`&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ OUTPUT: 'qgis_outputVector' chr "/tmp/Rtmpom7bCK/file2e5137ca35ad/file2e514ff3c5bd.gpkg"</span>
-<span class="r-in"><span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ OUTPUT: 'qgis_outputVector' chr "/tmp/Rtmp42iw9d/file2df311a6afeb/file2df33f84e513.gpkg"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -151,7 +158,7 @@ This can be useful in debugging.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Dewey Dunnington, Floris Vanderhaeghe, Jan Caha, Jannes Muenchow.</p>
+  <p></p><p>Developed by Dewey Dunnington, Floris Vanderhaeghe, Jan Caha, Jannes Muenchow, Research Institute for Nature and Forest (INBO).</p>
 </div>
 
 <div class="pkgdown-footer-right">
