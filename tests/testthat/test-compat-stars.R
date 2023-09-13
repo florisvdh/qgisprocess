@@ -28,6 +28,10 @@ test_that("stars argument coercers work", {
     system.file("longlake/longlake.tif", package = "qgisprocess"),
     proxy = TRUE
   )
+  cat("stars version:", as.character(packageVersion("stars")))
+  sf::sf_extSoftVersion()
+  cat("obj:\n")
+  print(obj)
   expect_equal(
     normalizePath(as_qgis_argument(obj, qgis_argument_spec(qgis_type = "layer"))),
     normalizePath(system.file("longlake/longlake.tif", package = "qgisprocess"))
@@ -40,10 +44,23 @@ test_that("stars argument coercers work", {
 
   # check behaviour in case of band selection
   obj1 <- obj[, , , 2]
+  withAutoprint({
+    print(obj1)
+    cat("class of obj1:")
+    print(class(obj1))
+    as_qgis_argument(obj1, qgis_argument_spec(qgis_type = "layer"))
+    x <- obj1
+    dim(x)["band"]
+    (file <- unclass(x)[[1]])
+    stringr::str_to_lower(tools::file_ext(file))
+    dim(stars::read_stars(file, proxy = TRUE))["band"]
+  })
+
   res <- expect_message(
     as_qgis_argument(obj1, qgis_argument_spec(qgis_type = "layer")),
     "Rewriting"
   )
+  cat(res, "\n")
   expect_s3_class(res, "qgis_tempfile_arg")
 })
 
