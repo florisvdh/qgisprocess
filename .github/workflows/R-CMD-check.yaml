@@ -183,24 +183,19 @@ jobs:
         if: matrix.config.qgis == 'ubuntugis'
         run: |
           # Rebuild and install sf, terra etc. if the RSPM binaries (or cached pkgs) don't load
-          cat("::group::sf\n")
-          if (!requireNamespace("sf", quietly = TRUE)) {
-            install.packages("sf", repos = "https://cloud.r-project.org")
-          }
-          cat("::endgroup::\n")
-          cat("::group::terra\n")
-          if (!requireNamespace("terra", quietly = TRUE)) {
-            install.packages("terra", repos = "https://cloud.r-project.org")
-          }
-          cat("::endgroup::\n")
-          cat("::group::raster\n")
-          if (!requireNamespace("raster", quietly = TRUE)) {
-            install.packages("raster", repos = "https://cloud.r-project.org")
-          }
-          cat("::endgroup::\n")
-          cat("::group::lwgeom (needed by stars)\n")
-          if (!requireNamespace("lwgeom", quietly = TRUE)) {  # needed for stars
-            install.packages("lwgeom", repos = "https://cloud.r-project.org")
+          cat("::group::If needed, rebuild and install sf, terra, raster and lwgeom (needed by stars)\n")
+          if (
+            !requireNamespace("sf", quietly = TRUE) ||
+            !requireNamespace("terra", quietly = TRUE) ||
+            !requireNamespace("raster", quietly = TRUE) ||
+            !requireNamespace("lwgeom", quietly = TRUE)
+          ) {
+            pak::pkg_install(c(
+              "sf?source",
+              "terra?source",
+              "raster?source",
+              "lwgeom?source"
+            ))
           }
           cat("::endgroup::\n")
           cat("::group::Session info\n")
