@@ -101,6 +101,12 @@ jobs:
           wget -qO ../sagang_plugin.zip https://plugins.qgis.org/plugins/processing_saga_nextgen/version/$SAGANGV/download/
           unzip -q ../sagang_plugin.zip -d ../extra_plugins
 
+      - name: Purge libpdal16 from ubuntugis-unstable PPA (temporary workaround)
+        if: matrix.config.qgis == 'ubuntugis'
+        run: |
+          # Purge libpdal16 from ubuntugis-unstable PPA (temporary workaround to prevent qgis_process crash: https://github.com/qgis/QGIS/issues/56285)
+          sudo apt-get purge -y libpdal16
+
       - name: Install QGIS (MacOS homebrew)
         if: matrix.config.qgis == 'macos-brew'
         run: |
